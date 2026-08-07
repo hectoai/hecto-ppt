@@ -1,11 +1,17 @@
 # 헥토 슬라이드 스킬
 
-Claude가 헥토 브랜드 규격에 맞는 16:9 PPTX 덱을 만들도록 하는 스킬이다. 좌표와 색은
-헬퍼가 고정하고, 생성 결과는 검증 스크립트가 판정한다.
+Claude로 헥토 브랜드 규격 16:9 PPTX 생성
 
-**이 저장소는 생성물이다.** 원본은 사내 `hecto_ppt` 개발 저장소이고, 거기서
-`python scripts/release.py`를 돌려 만든 결과를 여기에 올린다. 여기 파일을 직접
-고치지 말 것.
+- 좌표·색·폰트를 헬퍼가 고정. 사람이 좌표를 쓰지 않음
+- 생성 결과를 규칙 11개로 자동 판정. 통과 못 하면 배포 불가
+- 레이아웃 12종, 컴포넌트 전 종류 지원
+- 상시 비용 약 195토큰. 스킬 호출 시 2.4k 추가
+
+## 사전 준비
+
+- **Node.js** 및 `npm install` (PptxGenJS)
+- **Python 3** 및 `pip install python-pptx` (검증)
+- **Pretendard** 시스템 설치. 미설치 시 PowerPoint가 다른 한글 폰트로 대체
 
 ## 설치
 
@@ -16,46 +22,53 @@ Claude가 헥토 브랜드 규격에 맞는 16:9 PPTX 덱을 만들도록 하는
 /plugin install hecto-ppt@hectoai
 ```
 
-설치 후 `/reload-plugins`를 실행하라고 나오면 그렇게 한다. 갱신은 `/plugin marketplace update`.
+- 설치 후 `/reload-plugins` 안내가 나오면 실행
+- 갱신: `/plugin marketplace update`
 
 ### Claude Desktop (Cowork)
 
-**Customize > Plugins > Personal > "+" > Add marketplace**에 아래 주소를 넣는다.
-
-```
-https://github.com/hectoai/hecto-ppt
-```
-
-그다음 목록에서 `hecto-ppt`을 설치한다.
+- **Customize > Plugins > Personal > "+" > Add marketplace**
+- 주소 입력: `https://github.com/hectoai/hecto-ppt`
+- 목록에서 `hecto-ppt` 선택 후 설치
 
 ### Claude Desktop (zip)
 
-Cowork를 쓰지 않거나 위 경로가 막히면 zip으로 올린다.
+Cowork 미사용 또는 위 경로 실패 시
 
-1. **Settings > Capabilities**에서 코드 실행을 켠다. 꺼져 있으면 스킬 메뉴가 아예 안 보인다
+1. **Settings > Capabilities**에서 코드 실행 활성화 (꺼져 있으면 스킬 메뉴 미표시)
 2. **Customize > Skills > "+" > Upload a skill**
-3. `hecto-ppt.zip`을 올린다
+3. `hecto-ppt.zip` 업로드
 
-zip은 개발 저장소의 `dist/hecto-ppt.zip`에 있다.
+## 사용
 
-## 쓰는 법
+- 호출: "헥토 스타일로 PPT 만들어줘" 등 자연어. 스킬이 자동 인식
+- 산출물: 16:9 PPTX (13.333" x 7.500")
+- 좌표 스펙은 필요 시에만 로드. 대화 시작부터 상주하지 않음
 
-설치하고 나면 "헥토 스타일로 PPT 만들어줘"처럼 말하면 된다. 스킬이 알아서 뜬다.
+## 구성
 
-상시 비용은 약 195토큰이고, 스킬이 실제로 뜰 때만 2.4k가 추가로 든다. 좌표 스펙은
-필요할 때만 읽으므로 대화 시작부터 들고 있지 않는다.
-
-## 담긴 것
-
-| 경로 | 내용 |
+| 경로 | 역할 |
 |---|---|
-| `SKILL.md` | 레이아웃 선택 규칙과 절대 규칙 |
+| `SKILL.md` | 레이아웃 선택 규칙, 절대 규칙 |
 | `references/` | 토큰·컴포넌트·레이아웃·관례 상세 |
-| `lib/hecto.js` | 좌표를 고정하는 헬퍼. 호출부가 좌표를 넘길 수 없다 |
-| `scripts/verify_deck.py` | 규칙 11개 판정기. 통과 못 하면 배포하지 않는다 |
-| `assets/` | 워드마크 PNG 3종 (배경색 × 컨테이너 조합당 하나) |
-| `fonts/` | Pretendard Regular · Bold. 시스템에 설치해야 렌더가 맞는다 |
+| `lib/hecto.js` | 좌표 고정 헬퍼. 호출부에서 좌표 지정 불가 |
+| `scripts/verify_deck.py` | 규칙 11개 판정기 |
+| `assets/` | 워드마크 PNG 3종 (배경색 x 컨테이너 조합별) |
+| `fonts/` | Pretendard Regular · Bold |
+
+## 지원 레이아웃
+
+- 커버 / 목차 / 섹션 디바이더 / 종료(E.O.D.)
+- 콘텐츠 표준 (페어드 섹션 블록 `01.` `02.`)
+- 비교 (`A.` `B.`) / 3단 컬럼 / 2x2 그리드
+- 스텝 프로세스 / KPI 3연 + 데이터 표 / 히어로 스탯 / 핵심 정리
+
+차트·타임라인·풀 인용·콜아웃은 범위 밖. 수치는 데이터 표 또는 KPI 타일로 표현
 
 ## 버전
 
-0.3.2
+0.4.0
+
+---
+
+빌드 산출물 저장소. 직접 편집 시 다음 배포에서 덮어써짐
