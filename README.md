@@ -9,7 +9,7 @@
 ### Claude Code
 
 ```
-/plugin marketplace add cwlee-hecto/hecto-ppt
+/plugin marketplace add hectoai/hecto-ppt
 /plugin install hecto-ppt@hecto-tools
 ```
 
@@ -20,7 +20,7 @@
 **Customize > Plugins > Personal > "+" > Add marketplace**에 아래 주소를 넣는다.
 
 ```
-https://github.com/cwlee-hecto/hecto-ppt
+https://github.com/hectoai/hecto-ppt
 ```
 
 그다음 목록에서 `hecto-ppt`을 설치한다.
