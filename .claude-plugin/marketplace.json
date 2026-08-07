@@ -8,7 +8,7 @@
     {
       "name": "hecto-ppt",
       "source": "./plugins/hecto-ppt",
-      "description": "헥토 브랜드 규격 16:9 슬라이드 덱 생성"
+      "description": "헥토 브랜드 규격 16:9 슬라이드 생성"
     }
   ]
 }
