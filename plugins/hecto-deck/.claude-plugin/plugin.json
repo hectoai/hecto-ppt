@@ -1,0 +1,8 @@
+{
+  "name": "hecto-deck",
+  "description": "헥토 브랜드 규격 16:9 슬라이드 덱 생성",
+  "version": "0.1.0",
+  "author": {
+    "name": "Hecto"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "hecto-tools",
+  "description": "헥토 사내 Claude 도구 카탈로그. 브랜드 규격 산출물을 만드는 플러그인을 배포한다.",
+  "owner": {
+    "name": "Hecto"
+  },
+  "plugins": [
+    {
+      "name": "hecto-deck",
+      "source": "./plugins/hecto-deck",
+      "description": "헥토 브랜드 규격 16:9 슬라이드 덱 생성"
+    }
+  ]
+}
