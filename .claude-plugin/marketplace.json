@@ -1,6 +1,6 @@
 {
-  "name": "hecto-tools",
-  "description": "헥토 사내 Claude 도구 카탈로그. 브랜드 규격 산출물을 만드는 플러그인을 배포한다.",
+  "name": "hectoai",
+  "description": "헥토 Claude 도구 카탈로그.",
   "owner": {
     "name": "Hecto"
   },

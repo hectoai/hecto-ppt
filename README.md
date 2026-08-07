@@ -1,8 +1,11 @@
-# hecto-tools
+# 헥토 슬라이드 덱 스킬
 
-헥토 사내 Claude 도구 카탈로그. **이 저장소는 생성물이다.** 원본은 `hecto_ppt` 개발
-저장소이고, 거기서 `python scripts/build_skill.py`를 돌려 만든 결과를 여기에 올린다.
-여기 파일을 직접 고치지 말 것.
+Claude가 헥토 브랜드 규격에 맞는 16:9 PPTX 덱을 만들도록 하는 스킬이다. 좌표와 색은
+헬퍼가 고정하고, 생성 결과는 검증 스크립트가 판정한다.
+
+**이 저장소는 생성물이다.** 원본은 사내 `hecto_ppt` 개발 저장소이고, 거기서
+`python scripts/release.py`를 돌려 만든 결과를 여기에 올린다. 여기 파일을 직접
+고치지 말 것.
 
 ## 설치
 
@@ -10,7 +13,7 @@
 
 ```
 /plugin marketplace add hectoai/hecto-ppt
-/plugin install hecto-ppt@hecto-tools
+/plugin install hecto-ppt@hectoai
 ```
 
 설치 후 `/reload-plugins`를 실행하라고 나오면 그렇게 한다. 갱신은 `/plugin marketplace update`.
@@ -55,4 +58,4 @@ zip은 개발 저장소의 `dist/hecto-ppt.zip`에 있다.
 
 ## 버전
 
-0.3.0
+0.3.1
