@@ -159,15 +159,20 @@ runs.push({
 - Outer border 0.5pt {colors.hairline}; row height 0.42".
 - Inner row separators 0.5pt {colors.hairline-soft}.
 
+**Cell padding:** 0.10" horizontal, 0.03" vertical. Earlier drafts used ~0.08" horizontal, which left body text hugging the cell edge and made the table read tighter than the {component.kpi-tile}s above it (0.22" padding) on the same page.
+
+**Column alignment:** decided per column, and **the header cell always matches its own column's body alignment.** Short values (years, counts, percentages) center; sentence-like text left-aligns. A centered header over left-aligned body text is the most visible table defect in this system — the two rows of the same column appear to belong to different tables.
+
 **{component.data-table-header}** — Top header row.
-- Fill {colors.brand-orange-wash}, text {typography.table-header} in {colors.ink-strong}, centered.
+- Fill {colors.brand-orange-wash}, text {typography.table-header} in {colors.ink-strong}, alignment per column (see above).
 
 **{component.data-table-row}** — Body row.
-- Fill {colors.canvas}, text {typography.table-body} in {colors.body}, centered. Label column may be left-aligned and bold ({colors.ink-strong}).
+- Fill {colors.canvas}, text {typography.table-body} in {colors.body}. Label column is left-aligned and bold ({colors.ink-strong}).
 
 **{component.data-table-emphasis}** — Emphasis column (e.g., latest year, projected value).
 - Cell fill {colors.brand-orange-wash}, cell text {typography.table-body} in {colors.ink-strong} bold.
 - Header of that column: {typography.table-header} in {colors.brand-orange}.
+- **Row separators inside the emphasis column use {colors.hairline}, not {colors.hairline-soft}.** Hairline-soft on the orange wash has almost no contrast, so the row boundaries dissolve and the column reads as one solid panel instead of a set of rows.
 
 ### KPI Tiles
 

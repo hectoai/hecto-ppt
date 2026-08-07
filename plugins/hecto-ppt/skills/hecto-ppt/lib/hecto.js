@@ -223,22 +223,31 @@ class ContentSlide {
   // 데이터 표. 바깥 테두리 hairline, 안쪽 행 구분선 hairline-soft, 행 높이 0.42".
   // 강조 열은 **글자색**으로만 표시한다. 헤더 배경까지 오렌지로 채우면
   // 표 절반이 시그니처 오렌지가 되어 페이지의 오렌지 예산을 통째로 삼킨다.
-  table({ header, rows, colW, emphasis }) {
+  table({ header, rows, colW, emphasis, align }) {
     const y = this.hasKpi ? Y.tableAfterKpi : Y.blocks;
     const N = header.length;
     const outer = { type: "solid", pt: 0.5, color: C.hairline };
-    const inner = { type: "solid", pt: 0.5, color: C.hairlineSoft };
+    const soft = { type: "solid", pt: 0.5, color: C.hairlineSoft };
+    // 강조 열 안에서는 hairline-soft가 wash 위에서 보이지 않는다. 행 경계가
+    // 뭉개져 열 전체가 색면 하나로 읽히므로 한 단계 진한 hairline을 쓴다.
     const total = rows.length + 1;
-    const edge = (r, c) => [
-      r === 0 ? outer : inner,
-      c === N - 1 ? outer : inner,
-      r === total - 1 ? outer : inner,
-      c === 0 ? outer : inner,
-    ];
+    const edge = (r, c) => {
+      const inner = c === emphasis ? outer : soft;
+      return [
+        r === 0 ? outer : inner,
+        c === N - 1 ? outer : inner,
+        r === total - 1 ? outer : inner,
+        c === 0 ? outer : inner,
+      ];
+    };
+    // 열마다 정렬을 정하고, 헤더는 자기 열의 본문 정렬을 따른다.
+    // 기본값은 라벨 열 왼쪽, 나머지 가운데. 문장형 열은 호출부가 left를 넘긴다.
+    const at = (c) => (align && align[c]) || (c === 0 ? "left" : "center");
+
     const table = [header.map((txt, c) => ({
       text: txt,
       options: {
-        fontFace: F, fontSize: 12, bold: true, align: "center", valign: "middle",
+        fontFace: F, fontSize: 12, bold: true, align: at(c), valign: "middle",
         fill: { color: C.wash },
         color: c === emphasis ? C.brandOrange : C.ink,
         border: edge(0, c),
@@ -247,7 +256,7 @@ class ContentSlide {
     rows.forEach((row, r) => table.push(row.map((txt, c) => ({
       text: txt,
       options: {
-        fontFace: F, fontSize: 12, align: "left", valign: "middle",
+        fontFace: F, fontSize: 12, align: at(c), valign: "middle",
         bold: c === 0 || c === emphasis,
         color: c === 0 || c === emphasis ? C.ink : C.body,
         fill: { color: c === emphasis ? C.wash : C.canvas },
@@ -255,7 +264,8 @@ class ContentSlide {
       },
     }))));
     this.s.addTable(table, {
-      x: FRAME.x, y, w: FRAME.w, colW, rowH: 0.42, margin: [2, 6, 2, 6],
+      x: FRAME.x, y, w: FRAME.w, colW, rowH: 0.42,
+      margin: [2, 7, 2, 7],   // 좌우 0.10"
     });
     return this;
   }
