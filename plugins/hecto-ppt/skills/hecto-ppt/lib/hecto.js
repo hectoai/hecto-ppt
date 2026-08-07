@@ -1,4 +1,4 @@
-// 헥토 슬라이드 덱 헬퍼.
+// 헥토 슬라이드 자료 헬퍼.
 //
 // 호출부는 **좌표를 넘길 수 없다.** 레이아웃 이름만 고르면 앵커는 이 파일이 정한다.
 // 이전 방식(헬퍼가 x, y를 인자로 받음)에서 실제로 벌어진 일:
@@ -63,10 +63,10 @@ function assetPath(dir, name) {
 // ── 콘텐츠 슬라이드 ───────────────────────────────────────────────────
 // 메서드를 체인으로 부른다. 다음 앵커는 슬라이드가 스스로 안다.
 class ContentSlide {
-  constructor(deck, slide) {
-    this.deck = deck;
+  constructor(owner, slide) {
+    this.owner = owner;
     this.s = slide;
-    this.S = deck.S;
+    this.S = owner.S;
     this.hasStrip = false;
     this.hasKpi = false;
   }
@@ -333,12 +333,12 @@ function dashRuns(items) {
   }));
 }
 
-// ── 덱 ────────────────────────────────────────────────────────────────
+// ── 자료 ────────────────────────────────────────────────────────────────
 const CONFIDENTIAL =
   "Confidential and proprietary Any use of this material without\n" +
   "specific permission of Hecto is strictly prohibited";
 
-class Deck {
+class Presentation {
   constructor({ assetsDir } = {}) {
     this.assets = assetsDir || path.join(__dirname, "..", "assets");
     this.p = new pptxgen();
@@ -471,7 +471,7 @@ class Deck {
     return new ContentSlide(this, s);
   }
 
-  // 모든 덱은 이걸로 닫는다. 셰브론도 페이지 번호도 출처도 없다. 여백이 메시지다.
+  // 모든 자료는 이걸로 닫는다. 셰브론도 페이지 번호도 출처도 없다. 여백이 메시지다.
   // 워드마크는 헤더 크기 컨테이너에 들어가므로 -sm 변형을 쓴다. 커버용을 넣으면 눌린다.
   end({ mark = "E. O. D." } = {}) {
     const s = this._blank();
@@ -487,11 +487,11 @@ class Deck {
 
   async write(file) {
     if (!this.closed) {
-      throw new Error("덱이 slide-end로 닫히지 않았다. deck.end()를 부를 것.");
+      throw new Error("자료가 slide-end로 닫히지 않았다. pptx.end()를 부를 것.");
     }
     await this.p.writeFile({ fileName: file });
     return file;
   }
 }
 
-module.exports = { Deck, COLORS: C, FONT: F };
+module.exports = { Presentation, COLORS: C, FONT: F };

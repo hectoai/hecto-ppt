@@ -57,7 +57,7 @@ Cowork 미사용 또는 위 경로 실패 시
 | `SKILL.md` | 레이아웃 선택 규칙, 절대 규칙 |
 | `references/` | 토큰·컴포넌트·레이아웃·관례 상세 |
 | `lib/hecto.js` | 좌표 고정 헬퍼. 호출부에서 좌표 지정 불가 |
-| `scripts/verify_deck.py` | 규칙 11개 판정기 |
+| `scripts/verify_pptx.py` | 규칙 11개 판정기 |
 | `assets/` | 워드마크 PNG 3종 (배경색 x 컨테이너 조합별) |
 | `fonts/` | Pretendard Regular · Bold |
 
@@ -97,4 +97,4 @@ Cowork 미사용 또는 위 경로 실패 시
 
 ## 버전
 
-0.4.3
+0.5.0

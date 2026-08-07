@@ -15,7 +15,7 @@ description: 헥토(Hecto) 브랜드 규격에 맞는 16:9 PPTX를 만든다. �
 
 ```
 npm install               # 스킬 폴더에서. 없으면 Cannot find module 'pptxgenjs'로 죽는다
-pip install python-pptx   # verify_deck.py용
+pip install python-pptx   # verify_pptx.py용
 ```
 
 Pretendard만 예외다. 시스템 폰트라 자동 설치가 안 된다. 없어도 생성은 되지만 PowerPoint가 다른 한글 폰트로 대체해 렌더가 달라지므로, `fonts/`의 OTF를 설치하라고 **한 번 안내하고 넘어간다.** 설치를 기다리느라 작업을 멈추지 않는다.
@@ -25,7 +25,7 @@ Pretendard만 예외다. 시스템 폰트라 자동 설치가 안 된다. 없어
 1. **콘텐츠를 먼저 확정한다.** 장별 제목, 각 슬라이드가 말할 한 문장, 근거. 이게 정해지기 전에 레이아웃을 고르지 않는다.
 2. **슬라이드마다 레이아웃을 고른다.** 아래 선택 규칙을 쓴다. 습관이 아니라 콘텐츠의 모양에서 고른다.
 3. **`lib/hecto.js` 헬퍼로 빌드한다.** 좌표를 직접 쓰지 않는다. 헬퍼가 스펙 상수를 갖고 있다.
-4. **검증한다.** `python scripts/verify_deck.py <출력.pptx>`. 통과하지 못하면 배포하지 않는다.
+4. **검증한다.** `python scripts/verify_pptx.py <출력.pptx>`. 통과하지 못하면 배포하지 않는다.
 5. **눈으로 확인한다.** LibreOffice로 PDF 변환 후 이미지로 뽑아 본다. 검증은 좌표만 보고 문장은 안 본다.
 
 ## 레이아웃 선택
@@ -96,4 +96,4 @@ Pretendard만 예외다. 시스템 폰트라 자동 설치가 안 된다. 없어
   - `logo-orange-on-gray.png` 셰브론 헤더
 - `fonts/` Pretendard Regular · Bold OTF. 시스템에 설치돼 있어야 PowerPoint와 LibreOffice가 제대로 렌더한다
 - `lib/hecto.js` 좌표를 고정하는 헬퍼
-- `scripts/verify_deck.py` 규칙 11개 판정기
+- `scripts/verify_pptx.py` 규칙 11개 판정기
