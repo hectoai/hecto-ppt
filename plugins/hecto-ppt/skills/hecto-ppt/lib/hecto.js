@@ -228,11 +228,13 @@ class ContentSlide {
     const N = header.length;
     const outer = { type: "solid", pt: 0.5, color: C.hairline };
     const soft = { type: "solid", pt: 0.5, color: C.hairlineSoft };
-    // 강조 열 안에서는 hairline-soft가 wash 위에서 보이지 않는다. 행 경계가
-    // 뭉개져 열 전체가 색면 하나로 읽히므로 한 단계 진한 hairline을 쓴다.
+    // 강조 열 안에서는 회색 구분선이 보이지 않는다. wash(255,231,220) 위에서
+    // hairline-soft는 차이가 (16,9,22), hairline은 (23,2,16)로 둘 다 사실상 무의미하다.
+    // 팔레트 안에서 실제로 보이는 것은 canvas(흰색)뿐이다. 차이 (0,24,35).
+    const washRule = { type: "solid", pt: 1, color: C.canvas };
     const total = rows.length + 1;
     const edge = (r, c) => {
-      const inner = c === emphasis ? outer : soft;
+      const inner = c === emphasis ? washRule : soft;
       return [
         r === 0 ? outer : inner,
         c === N - 1 ? outer : inner,

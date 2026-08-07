@@ -172,7 +172,7 @@ runs.push({
 **{component.data-table-emphasis}** — Emphasis column (e.g., latest year, projected value).
 - Cell fill {colors.brand-orange-wash}, cell text {typography.table-body} in {colors.ink-strong} bold.
 - Header of that column: {typography.table-header} in {colors.brand-orange}.
-- **Row separators inside the emphasis column use {colors.hairline}, not {colors.hairline-soft}.** Hairline-soft on the orange wash has almost no contrast, so the row boundaries dissolve and the column reads as one solid panel instead of a set of rows.
+- **Row separators inside the emphasis column are 1pt {colors.canvas} (white), not a gray hairline.** Measured against the wash (255, 231, 220): hairline-soft differs by (16, 9, 22) and hairline by (23, 2, 16) — both are invisible in practice, so the column reads as one solid panel instead of a set of rows. White differs by (0, 24, 35) and reads as a clean gap. The gray hairlines remain correct everywhere the cell fill is {colors.canvas}.
 
 ### KPI Tiles
 
