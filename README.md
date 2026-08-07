@@ -10,7 +10,7 @@
 
 ```
 /plugin marketplace add https://gitlab.hectoai.co.kr/cwlee/hecto-claude-tools.git
-/plugin install hecto-deck@hecto-tools
+/plugin install hecto-ppt@hecto-tools
 ```
 
 설치 후 `/reload-plugins`를 실행하라고 나오면 그렇게 한다.
@@ -24,9 +24,9 @@
 1. **Settings > Capabilities**에서 코드 실행을 켠다. 이게 꺼져 있으면 스킬 메뉴 자체가 안 보인다
 2. **Customize > Skills**로 간다
 3. **"+" > Upload a skill**을 누른다
-4. `hecto-deck.zip`을 올린다
+4. `hecto-ppt.zip`을 올린다
 
-zip은 개발 저장소의 `dist/hecto-deck.zip`에 있다. 배포 담당자에게 요청하거나 직접 빌드한다.
+zip은 개발 저장소의 `dist/hecto-ppt.zip`에 있다. 배포 담당자에게 요청하거나 직접 빌드한다.
 
 ## 쓰는 법
 
@@ -48,4 +48,4 @@ zip은 개발 저장소의 `dist/hecto-deck.zip`에 있다. 배포 담당자에�
 
 ## 버전
 
-0.1.0
+0.2.0

@@ -6,8 +6,8 @@
   },
   "plugins": [
     {
-      "name": "hecto-deck",
-      "source": "./plugins/hecto-deck",
+      "name": "hecto-ppt",
+      "source": "./plugins/hecto-ppt",
       "description": "헥토 브랜드 규격 16:9 슬라이드 덱 생성"
     }
   ]
