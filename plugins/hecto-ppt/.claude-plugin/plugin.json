@@ -1,7 +1,7 @@
 {
   "name": "hecto-ppt",
   "description": "헥토 브랜드 규격 16:9 슬라이드 덱 생성",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Hecto"
   }

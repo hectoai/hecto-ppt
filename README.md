@@ -9,24 +9,31 @@
 ### Claude Code
 
 ```
-/plugin marketplace add https://gitlab.hectoai.co.kr/cwlee/hecto-claude-tools.git
+/plugin marketplace add cwlee-hecto/hecto-ppt
 /plugin install hecto-ppt@hecto-tools
 ```
 
-설치 후 `/reload-plugins`를 실행하라고 나오면 그렇게 한다.
+설치 후 `/reload-plugins`를 실행하라고 나오면 그렇게 한다. 갱신은 `/plugin marketplace update`.
 
-갱신은 `/plugin marketplace update`다. 사내 GitLab이 HTTPS만 노출해서 백그라운드 자동
-갱신이 간헐적으로 실패할 수 있으니, 스펙이 바뀌었다는 공지를 받으면 수동으로 한 번
-돌려주는 편이 확실하다.
+### Claude Desktop (Cowork)
 
-### Claude Desktop
+**Customize > Plugins > Personal > "+" > Add marketplace**에 아래 주소를 넣는다.
 
-1. **Settings > Capabilities**에서 코드 실행을 켠다. 이게 꺼져 있으면 스킬 메뉴 자체가 안 보인다
-2. **Customize > Skills**로 간다
-3. **"+" > Upload a skill**을 누른다
-4. `hecto-ppt.zip`을 올린다
+```
+https://github.com/cwlee-hecto/hecto-ppt
+```
 
-zip은 개발 저장소의 `dist/hecto-ppt.zip`에 있다. 배포 담당자에게 요청하거나 직접 빌드한다.
+그다음 목록에서 `hecto-ppt`을 설치한다.
+
+### Claude Desktop (zip)
+
+Cowork를 쓰지 않거나 위 경로가 막히면 zip으로 올린다.
+
+1. **Settings > Capabilities**에서 코드 실행을 켠다. 꺼져 있으면 스킬 메뉴가 아예 안 보인다
+2. **Customize > Skills > "+" > Upload a skill**
+3. `hecto-ppt.zip`을 올린다
+
+zip은 개발 저장소의 `dist/hecto-ppt.zip`에 있다.
 
 ## 쓰는 법
 
@@ -48,4 +55,4 @@ zip은 개발 저장소의 `dist/hecto-ppt.zip`에 있다. 배포 담당자에�
 
 ## 버전
 
-0.2.0
+0.3.0
