@@ -7,11 +7,14 @@ Claude로 헥토 브랜드 규격 16:9 PPTX 생성
 - 레이아웃 12종, 컴포넌트 전 종류 지원
 - 상시 비용 약 195토큰. 스킬 호출 시 2.4k 추가
 
-## 사전 준비
+## 요구 환경
 
-- **Node.js** 및 `npm install` (PptxGenJS)
-- **Python 3** 및 `pip install python-pptx` (검증)
-- **Pretendard** 시스템 설치. 미설치 시 PowerPoint가 다른 한글 폰트로 대체
+- Node.js, Python 3. 설치돼 있으면 됨
+- 라이브러리(PptxGenJS, python-pptx)는 **Claude가 알아서 설치**. 사용자 작업 아님
+
+권장 사항 하나
+
+- **Pretendard 설치.** 없어도 생성은 되지만 PowerPoint가 다른 한글 폰트로 대체해 렌더가 달라짐. OTF는 `fonts/`에 포함
 
 ## 설치
 
@@ -67,7 +70,7 @@ Cowork 미사용 또는 위 경로 실패 시
 
 ## 버전
 
-0.4.0
+0.4.1
 
 ---
 

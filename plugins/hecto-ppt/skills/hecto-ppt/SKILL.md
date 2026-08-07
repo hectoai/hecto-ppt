@@ -9,14 +9,16 @@ description: 헥토(Hecto) 브랜드 규격에 맞는 16:9 PPTX 슬라이드 덱
 
 ## 시작 전에
 
-의존성을 먼저 확인한다. 없으면 헬퍼가 `Cannot find module 'pptxgenjs'`로 죽는다.
+**의존성은 네가 설치한다. 사용자에게 시키지 않는다.**
+
+헬퍼를 처음 부르기 전에 확인하고, 없으면 그 자리에서 깐다.
 
 ```
-npm install          # 스킬 폴더에서. PptxGenJS
-pip install python-pptx   # 검증 스크립트용
+npm install               # 스킬 폴더에서. 없으면 Cannot find module 'pptxgenjs'로 죽는다
+pip install python-pptx   # verify_deck.py용
 ```
 
-Pretendard가 시스템에 없으면 PowerPoint가 다른 한글 폰트로 대체한다. 생성 자체는 되지만 렌더가 달라진다. `fonts/`에 OTF가 들어 있으니 설치를 안내한다.
+Pretendard만 예외다. 시스템 폰트라 자동 설치가 안 된다. 없어도 생성은 되지만 PowerPoint가 다른 한글 폰트로 대체해 렌더가 달라지므로, `fonts/`의 OTF를 설치하라고 **한 번 안내하고 넘어간다.** 설치를 기다리느라 작업을 멈추지 않는다.
 
 ## 작업 순서
 
