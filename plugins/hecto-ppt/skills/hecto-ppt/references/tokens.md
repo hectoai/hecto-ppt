@@ -58,6 +58,7 @@ Pretendard was chosen for its dual fluency: it scales cleanly from 110pt display
 | Token | Size | Weight | Line Height | Letter Spacing | Use |
 |---|---|---|---|---|---|
 | {typography.kpi-numeral} | 44pt | 700 | 1.0 | -1% | {component.kpi-tile} primary numeric value |
+| {typography.summary-statement} | 18pt | 700 | 1.4 | 0 | The single governing sentence on {layout.slide-summary}. Looser leading than other 18pt roles because it runs as prose across the full frame, not as a short label inside chrome. |
 | {typography.step-title} | 18pt | 700 | 1.3 | 0 | {component.step-card} Korean title |
 | {typography.chapter-badge} | 18pt | 700 | 1.3 | 0 | Text inside the {component.chapter-pill}, **left-aligned** |
 | {typography.page-context} | 18pt | 700 | 1.3 | 0 | Text in the {component.context-bar}, left-aligned |

@@ -52,6 +52,9 @@ const Y = {
   heroHeadline: 4.40,
   heroNotes: 5.00,
   takeaways: 2.05,
+  statement: 1.85,       // 핵심 요약의 결론 문장
+  summaryBlocks: 3.10,   // 그 아래 근거 3열
+  tableAlone: 2.60,      // 리드 문단 없이 표가 본체일 때
 };
 
 const WORDMARK = { x: 11.80, y: 0.353, w: 1.06, h: 0.38 };
@@ -69,6 +72,7 @@ class ContentSlide {
     this.S = owner.S;
     this.hasStrip = false;
     this.hasKpi = false;
+    this.hasLead = false;
   }
 
   lead(text) {
@@ -77,6 +81,7 @@ class ContentSlide {
       fontFace: F, fontSize: 14, color: C.body,
       align: "left", valign: "top", lineSpacingMultiple: 1.5, margin: 0,
     });
+    this.hasLead = true;
     return this;
   }
 
@@ -224,7 +229,13 @@ class ContentSlide {
   // 강조 열은 **글자색**으로만 표시한다. 헤더 배경까지 오렌지로 채우면
   // 표 절반이 시그니처 오렌지가 되어 페이지의 오렌지 예산을 통째로 삼킨다.
   table({ header, rows, colW, emphasis, align }) {
-    const y = this.hasKpi ? Y.tableAfterKpi : Y.blocks;
+    const y = this.hasKpi ? Y.tableAfterKpi : (this.hasLead ? Y.blocks : Y.tableAlone);
+    // 행 0.42", 본문은 푸터선(6.95)을 넘지 않는다. 리드 있으면 9행, 없으면 10행.
+    const budget = Math.floor((FOOTER_TOP - y) / 0.42);
+    if (rows.length + 1 > budget) {
+      throw new Error(`표가 ${rows.length + 1}행인데 이 자리에는 ${budget}행까지만 들어간다. `
+        + `슬라이드를 나누거나 부록으로 옮긴다. 행 높이를 줄이지 않는다.`);
+    }
     const N = header.length;
     const outer = { type: "solid", pt: 0.5, color: C.hairline };
     const soft = { type: "solid", pt: 0.5, color: C.hairlineSoft };
@@ -268,6 +279,55 @@ class ContentSlide {
     this.s.addTable(table, {
       x: FRAME.x, y, w: FRAME.w, colW, rowH: 0.42,
       margin: [2, 7, 2, 7],   // 좌우 0.10"
+    });
+    return this;
+  }
+
+  // 긴 산문. slide-open의 기본 본문이다. 배경 설명, 방법론, 법적 고지처럼
+  // 어떤 단 구성도 도움이 안 되는 글에 쓴다. 행간을 1.6으로 벌려 읽히게 한다.
+  // 문단 배열을 받는다. 호출부가 개행 문자를 다루게 하면 이스케이프에서 사고가 난다.
+  prose(paragraphs) {
+    const list = Array.isArray(paragraphs) ? paragraphs : [paragraphs];
+    this.s.addText(list.map((text, i) => ({
+      text,
+      options: {
+        fontFace: F, fontSize: 14, color: C.body,
+        breakLine: true, lineSpacingMultiple: 1.6,
+        paraSpaceAfter: i === list.length - 1 ? 0 : 10,
+      },
+    })), {
+      x: FRAME.x, y: Y.lead, w: FRAME.w, h: FOOTER_TOP - Y.lead,
+      align: "left", valign: "top", margin: 0,
+    });
+    this.hasLead = true;
+    return this;
+  }
+
+  // 핵심 요약. 결론 문장 하나가 근거 3열을 거느린다.
+  // takeaways가 닫는 요약이라면 이건 여는 요약이다. 결론을 앞에 세운다.
+  summary({ statement, blocks }) {
+    this.s.addText(statement, {
+      x: FRAME.x, y: Y.statement, w: FRAME.w, h: 0.80,
+      fontFace: F, fontSize: 18, bold: true, color: C.ink,
+      align: "left", valign: "top", lineSpacingMultiple: 1.4, margin: 0,
+    });
+    const W = 4.06;
+    const y = Y.summaryBlocks;
+    const bodyH = FOOTER_TOP - (y + 0.50);
+    blocks.slice(0, 3).forEach((b, i) => {
+      const x = FRAME.x + i * (W + 0.20);
+      this.s.addShape(this.S.rect, {
+        x, y, w: W, h: 0.37, fill: { color: C.wash }, line: { type: "none" },
+      });
+      this.s.addText(b.head, {
+        x: x + 0.18, y, w: W - 0.30, h: 0.37,
+        fontFace: F, fontSize: 14, bold: true, color: C.ink,
+        align: "left", valign: "middle", margin: 0,
+      });
+      this.s.addText(dashRuns(b.items), {
+        x: x + 0.18, y: y + 0.50, w: W - 0.36, h: bodyH,
+        align: "left", valign: "top", margin: 0,
+      });
     });
     return this;
   }
@@ -431,8 +491,11 @@ class Presentation {
     return this;
   }
 
-  // 섹션 디바이더. 원은 y 0.40~6.90, 중심 3.65. 세 요소를 그 중심에 맞춰 쌓는다.
+  // 섹션 디바이더. 원은 y 0.40~6.90, 중심 3.65. 요소를 그 중심에 맞춰 쌓는다.
   // 영문 제목은 한 줄 10자를 넘기지 않는다. 넘기면 원 안에서 줄바꿈이 깨진다.
+  //
+  // num을 넘기지 않으면 부록 간지가 된다. 부록에 번호를 달면 목차에 있어야 할
+  // 장처럼 읽힌다. 번호가 빠진 만큼 남은 두 요소를 다시 중심에 맞춘다.
   sectionDivider({ num, titleEn, descKo }) {
     titleEn.split("\n").forEach((line) => {
       if (line.length > 10) {
@@ -444,23 +507,30 @@ class Presentation {
       x: 3.42, y: 0.40, w: 6.50, h: 6.50,
       fill: { color: C.brandOrange }, line: { type: "none" },
     });
-    s.addText(num, {
-      x: 3.42, y: 1.80, w: 6.50, h: 1.00,
-      fontFace: F, fontSize: 72, bold: true, color: C.ink,
-      align: "center", valign: "middle", margin: 0,
-    });
+    if (num) {
+      s.addText(num, {
+        x: 3.42, y: 1.80, w: 6.50, h: 1.00,
+        fontFace: F, fontSize: 72, bold: true, color: C.ink,
+        align: "center", valign: "middle", margin: 0,
+      });
+    }
     s.addText(titleEn, {
-      x: 3.42, y: 2.85, w: 6.50, h: 1.90,
+      x: 3.42, y: 2.85, w: 6.50, h: num ? 1.90 : 1.10,
       fontFace: F, fontSize: 60, bold: true, color: C.ink,
       align: "center", valign: "middle", charSpacing: -1.5, lineSpacingMultiple: 1.05, margin: 0,
     });
     s.addText(descKo, {
-      x: 3.42, y: 5.00, w: 6.50, h: 0.40,
+      x: 3.42, y: num ? 5.00 : 4.10, w: 6.50, h: 0.40,
       fontFace: F, fontSize: 16, bold: true, color: C.ink,
       align: "center", valign: "middle", margin: 0,
     });
     this._pageNumber(s);
     return this;
+  }
+
+  // 부록 간지. 번호 없는 섹션 디바이더다.
+  appendixDivider({ descKo }) {
+    return this.sectionDivider({ titleEn: "APPENDIX", descKo });
   }
 
   // 표준 크롬을 얹은 콘텐츠 슬라이드. 반환된 객체에 체인으로 내용을 쌓는다.
@@ -481,6 +551,15 @@ class Presentation {
 
     this._pageNumber(s);
     return new ContentSlide(this, s);
+  }
+
+  // 자유 배치. 크롬만 얹고 본문은 호출부가 채운다.
+  // 다른 레이아웃에 안 맞는 내용을 억지로 끼워 넣거나 크롬 없이 만드는 것보다 낫다.
+  // 반환값의 free가 허용 영역이다. 벗어나면 검증 R7(캔버스 이탈)이 잡는다.
+  open(meta) {
+    const slide = this.content(meta);
+    slide.free = { x: FRAME.x, w: FRAME.w, top: Y.lead, bottom: FOOTER_TOP };
+    return slide;
   }
 
   // 모든 자료는 이걸로 닫는다. 셰브론도 페이지 번호도 출처도 없다. 여백이 메시지다.

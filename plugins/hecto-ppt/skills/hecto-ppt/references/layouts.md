@@ -45,6 +45,24 @@ The cover defines a **pattern, not a script.** Title, subtitle, date, and author
 - {component.page-number} bottom-right.
 - This is the system's most graphically-driven layout — the orange circle does all the work; no other decoration, no rules, no eyebrows.
 
+**{layout.slide-appendix-divider}** — Marks the start of supporting material. Same orange circle as {layout.slide-section-divider}, without the chapter numeral.
+
+Report decks carry evidence behind the argument. The appendix needs a boundary the reader recognizes, and reusing the divider circle says "still the same document" while dropping the numeral says "outside the numbered chapters."
+
+- Background {colors.canvas}.
+- Single 6.50" ellipse, {colors.brand-orange}, at (x=3.42", y=0.40") — identical to {layout.slide-section-divider}.
+- **No chapter numeral.** The appendix is not chapter N+1; numbering it invites the reader to expect it in the {layout.slide-toc}.
+- Inside the circle, two elements recentered on the circle's midpoint (y=3.65"):
+  - `APPENDIX` at (x=3.42", **y=2.85"**, w=6.50", h=1.10"), 60pt Bold {colors.ink-strong}, -1.5 charSpacing
+  - Korean description at (x=3.42", **y=4.10"**, w=6.50", h=0.40"), 16pt Bold {colors.ink-strong}
+- {component.page-number} bottom-right. Appendix pages keep counting from the body; they do not restart at 1.
+
+**Choose appendix divider when:**
+- Detail that supports the argument but would slow the main narrative follows.
+
+**Avoid when:**
+- The material is part of the argument → it belongs in a numbered chapter, behind {layout.slide-section-divider}.
+
 **{layout.slide-toc}** — Large "CONTENTS" title with bottom-anchored 4-column chapter grid.
 - Background {colors.canvas}.
 - Top-left: `CONTENTS` (60pt Bold {colors.ink-strong}, -1 charSpacing) at x=0.55", y=0.50".
@@ -56,6 +74,26 @@ The cover defines a **pattern, not a script.** Title, subtitle, date, and author
   - 3 small-dot bullets (`·  text`) — 12pt {colors.body}, 1.35 line spacing
 - **No Korean subtitle row.** The English chapter heading carries directly into the hairline divider — no Korean translation sits between them. Section-divider slides ({layout.slide-section-divider}) are where the Korean description appears for each chapter; the TOC stays English + bullet dots only.
 - {component.page-number} bottom-right.
+
+**{layout.slide-summary}** — Executive summary. One governing sentence over its supporting evidence. Sits immediately after {layout.slide-cover} or {layout.slide-toc}.
+
+The most important slide in a report deck. It front-loads the conclusion so a reader who stops after two pages still leaves with the answer. This is the opening counterpart to {layout.slide-takeaways}, which closes.
+
+- Background {colors.canvas}.
+- Standard chrome.
+- **Governing statement** at (x=0.40", **y=1.85"**, w=12.58", h=0.80"), {typography.summary-statement} (18pt Bold) {colors.ink-strong}, **max 2 lines**. One sentence. If it needs two sentences, the deck has two conclusions and the slide is doing two jobs.
+- **Three supporting blocks** at **y=3.10"**, each w=4.06" with 0.20" gutter (x=0.40", x=4.66", x=8.92"). Each block is a {component.section-header-band} (wash, h=0.37") carrying a {typography.subsection-header} (14pt Bold) label, with a {component.bullet-list} beneath starting at block.y + 0.50".
+- Source citation at y=7.10", w=11.50".
+
+**Why three and not four:** the governing statement carries the argument; the blocks carry the evidence for it. Four columns at 3.00" each drop below the width where a Korean label plus a dash list stays readable, and a reader scanning for support does not hold four parallel claims at once.
+
+**Choose summary when:**
+- The deck reports a conclusion and the reader needs it before the reasoning.
+- An executive will read the first two slides and skip the rest. Plan for that reader.
+
+**Avoid when:**
+- The deck is exploratory with no conclusion yet → open with {layout.slide-content-standard} framing the question instead.
+- Closing recap → use {layout.slide-takeaways}.
 
 **{layout.slide-content-standard}** — Chevron-header workhorse.
 - Background {colors.canvas}.
@@ -70,6 +108,26 @@ The cover defines a **pattern, not a script.** Title, subtitle, date, and author
 
 **{layout.slide-kpi-row}** — 3 KPI tiles + supporting table variant.
 - Standard chrome, then lead paragraph (full-width) → 3 {component.kpi-tile}s in 4+4+4 allocation with 0.20" gutters → optional {component.data-table} below → source citation footer in {typography.caption} {colors.muted}.
+
+**{layout.slide-table-focus}** — A {component.data-table} is the slide's content, not a supporting exhibit under something else.
+
+With charts out of scope, the data table carries every multi-value comparison in this system. It needs a layout where it is the subject.
+
+- Background {colors.canvas}.
+- Standard chrome.
+- **Optional lead paragraph** at y=1.85" saying what the table shows and what to look for.
+- **Table** spanning the content frame (x=0.40", w=12.58"), anchored at **y=2.85"** when a lead paragraph is present and **y=2.60"** when it is not.
+- **Row budget:** rows are 0.42" and the body must clear the footer line at y=6.95". That allows **9 rows with a lead paragraph, 10 without** — header row included. Beyond that, split across two slides or move detail to an appendix; do not shrink the row height.
+- Source citation at y=7.10", w=11.50".
+
+**Choose table focus when:**
+- Three or more dimensions compared across three or more items.
+- The reader will scan for a specific cell rather than read a narrative.
+
+**Avoid when:**
+- Three values with no cross-dimension comparison → {layout.slide-kpi-row}.
+- One value dominates → {layout.slide-hero-stat}.
+- Two items on one dimension → {layout.slide-comparison} reads better than a two-row table.
 
 **{layout.slide-hero-stat}** — One headline number anchors the slide. The "single statistic you should remember" pattern.
 
@@ -156,6 +214,23 @@ The cover defines a **pattern, not a script.** Title, subtitle, date, and author
 - Items are sequential → use {component.step-strip}.
 - One item dominates → asymmetric layout instead.
 - The grid would force two cells to be much sparser than the others — pad uneven content with explanatory dashes or split the slide.
+
+**{layout.slide-open}** — Chrome only. The body region is left free.
+
+Every layout system needs a sanctioned escape hatch. Without one, content that fits nothing gets forced into the nearest layout and breaks it, or gets built off-grid with no chrome at all. This layout says: the header, the title pair, the page number and the footer line still hold; arrange the middle as the content requires.
+
+- Background {colors.canvas}.
+- Standard chrome: {component.chevron-header} + {component.page-title-pair} + {component.page-divider} + {component.page-number}.
+- **Free body region:** x=0.40" → 12.98", y=1.85" → 6.95". Nothing may cross those bounds.
+- Everything else still applies. Palette, type scale, {rounded.flat} corners, one signature-orange surface per page, source citation at y=7.10" when external data appears.
+
+**Choose open when:**
+- Long-form prose (background, methodology, a legal note) that no columnar layout serves.
+- A one-off arrangement that will not repeat in the deck.
+
+**Avoid when:**
+- The content matches any other layout, even loosely. Reach for this last, not first.
+- The same off-grid arrangement appears twice. Two uses means it is a layout — specify it here instead.
 
 **{layout.slide-takeaways}** — Numbered key insights stacked vertically, full-width. For closing summaries, executive readouts, "if you remember nothing else" pages.
 
