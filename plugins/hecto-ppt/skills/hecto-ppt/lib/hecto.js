@@ -555,11 +555,9 @@ class Presentation {
 
   // 자유 배치. 크롬만 얹고 본문은 호출부가 채운다.
   // 다른 레이아웃에 안 맞는 내용을 억지로 끼워 넣거나 크롬 없이 만드는 것보다 낫다.
-  // 반환값의 free가 허용 영역이다. 벗어나면 검증 R7(캔버스 이탈)이 잡는다.
+  // 본문 영역은 y 1.85~6.95. 벗어나면 검증 R7(캔버스 이탈)이 잡는다.
   open(meta) {
-    const slide = this.content(meta);
-    slide.free = { x: FRAME.x, w: FRAME.w, top: Y.lead, bottom: FOOTER_TOP };
-    return slide;
+    return this.content(meta);
   }
 
   // 모든 자료는 이걸로 닫는다. 셰브론도 페이지 번호도 출처도 없다. 여백이 메시지다.

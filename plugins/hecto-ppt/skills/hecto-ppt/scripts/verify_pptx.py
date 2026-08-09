@@ -36,6 +36,8 @@ PAGENUM_X, PAGENUM_Y = 12.13, 7.10
 END_MARK_X, END_MARK_Y = 0.40, 3.00
 TABLE_ROW_H = 0.42          # DESIGN.md:320 data-table
 BRAND_ORANGE = "FF6013"
+WASH = "FFE7DC"
+CANVAS = "FFFFFF"
 ASPECT_TOL = 0.005          # 워드마크 허용 왜곡 0.5%. 픽셀 반올림 잔차는 통과시킨다
 
 # 고정 보일러플레이트 (DESIGN.md:460). 줄바꿈은 공백으로 정규화해 비교한다.
@@ -258,6 +260,47 @@ def check_wordmark_aspect(idx, slide, rep):
                      f"이미지 {px_w}x{px_h} ({px_w / px_h:.4f}) → {drift * 100:+.2f}% 왜곡")
 
 
+def check_anchors(idx, slide, rep):
+    """본문 컴포넌트가 스펙 앵커에 앉았는가.
+
+    R2가 크롬을 보는 동안 본문은 아무도 안 봤다. 실제로 페어드 섹션 블록이
+    스펙 2.85 대신 2.90에 앉아 있던 것을 손으로 찾았다. 어떤 규칙도 못 잡았다.
+
+    좌표가 lib/hecto.js 상수로 갇힌 지금은 재발이 어렵지만, 헬퍼를 거치지 않고
+    pptxgenjs를 직접 쓰면 크롬만 맞고 본문은 아무 데나 갈 수 있다.
+    크기와 채움색으로 컴포넌트를 알아보고 허용 앵커와 대조한다.
+    """
+    for sh in slide.shapes:
+        x, y, w, h = box(sh)
+        if None in (x, y, w, h):
+            continue
+        fill = solid_fill(sh)
+
+        for name, ok in match_component(fill, w, h, sh):
+            if not any(near(y, a) for a in ok['y']):
+                rep.fail("R12 본문 앵커",
+                         f"slide {idx}: {name} y={y:.3f} (허용 {ok['y']})")
+            if ok.get('x') and not any(near(x, a) for a in ok['x']):
+                rep.fail("R12 본문 앵커",
+                         f"slide {idx}: {name} x={x:.3f} (허용 {ok['x']})")
+
+
+def match_component(fill, w, h, sh):
+    """도형 하나가 어떤 컴포넌트인지 알아본다. 크기와 채움색이 지문이다."""
+    out = []
+    if fill == WASH and near(h, 0.37):
+        # 섹션 헤더 밴드. 페어드(2.85/4.40), 핵심 요약 근거(3.10)
+        out.append(("섹션 헤더 밴드", {'y': [2.85, 3.10, 4.40],
+                                  'x': [0.40, 4.66, 6.79, 8.92]}))
+    elif fill == WASH and near(h, 1.57):
+        out.append(("스텝 스트립", {'y': [2.60], 'x': [0.40]}))
+    elif fill == CANVAS and near(h, 1.50) and near(w, 4.06):
+        out.append(("KPI 타일", {'y': [2.60], 'x': [0.40, 4.66, 8.92]}))
+    elif fill == BRAND_ORANGE and near(w, 6.50) and near(h, 6.50):
+        out.append(("섹션 디바이더 원", {'y': [0.40], 'x': [3.42]}))
+    return out
+
+
 def check_bounds(idx, slide, rep):
     for sh in slide.shapes:
         x, y, w, h = box(sh)
@@ -305,6 +348,7 @@ RULES = [
     "R9 커버 보일러플레이트",
     "R10 데이터 표",
     "R11 워드마크 비율",
+    "R12 본문 앵커",
 ]
 
 
@@ -322,6 +366,7 @@ def main(path):
         check_palette_and_font(i, slide, rep)
         check_tables(i, slide, rep)
         check_wordmark_aspect(i, slide, rep)
+        check_anchors(i, slide, rep)
         check_bounds(i, slide, rep)
     check_end_slide(slides, rep)
 
