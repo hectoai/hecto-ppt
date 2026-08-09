@@ -104,4 +104,4 @@ Pretendard만 예외다. 시스템 폰트라 자동 설치가 안 된다. 없어
   - `logo-orange-on-gray.png` 셰브론 헤더
 - `fonts/` Pretendard Regular · Bold OTF. 시스템에 설치돼 있어야 PowerPoint와 LibreOffice가 제대로 렌더한다
 - `lib/hecto.js` 좌표를 고정하는 헬퍼
-- `scripts/verify_pptx.py` 규칙 11개 판정기
+- `scripts/verify_pptx.py` 규칙 12개 판정기
