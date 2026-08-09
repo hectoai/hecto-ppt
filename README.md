@@ -4,7 +4,7 @@ Claude로 헥토 브랜드 규격 16:9 PPTX 생성
 
 - 좌표·색·폰트를 헬퍼가 고정. 사람이 좌표를 쓰지 않음
 - 생성 결과를 규칙 11개로 자동 판정. 통과 못 하면 배포 불가
-- 레이아웃 12종, 컴포넌트 전 종류 지원
+- 레이아웃 16종, 컴포넌트 전 종류 지원
 - 상시 비용 약 195토큰. 스킬 호출 시 2.4k 추가
 
 ## 설치
@@ -60,29 +60,37 @@ Pretendard가 시스템에 설치돼 있으면 렌더가 정확해진다. 없어
 |---|---|
 | ![](preview/slide-1.png) | ![](preview/slide-2.png) |
 
-| 섹션 디바이더 | 콘텐츠 표준 (`01.` `02.`) |
+| 핵심 요약 (결론 + 근거 3열) | 섹션 디바이더 |
 |---|---|
 | ![](preview/slide-3.png) | ![](preview/slide-4.png) |
 
-| 2x2 그리드 | 스텝 프로세스 |
+| 콘텐츠 표준 (`01.` `02.`) | 2x2 그리드 |
 |---|---|
 | ![](preview/slide-5.png) | ![](preview/slide-6.png) |
 
-| 스텝 심화 (한 단계 강조) | 3단 컬럼 |
+| 스텝 프로세스 | 스텝 심화 (한 단계 강조) |
 |---|---|
 | ![](preview/slide-7.png) | ![](preview/slide-8.png) |
 
-| 비교 (`A.` `B.`) | 히어로 스탯 |
+| 3단 컬럼 | 비교 (`A.` `B.`) |
 |---|---|
 | ![](preview/slide-9.png) | ![](preview/slide-10.png) |
 
-| KPI 3연 + 데이터 표 | 핵심 정리 |
+| 히어로 스탯 | KPI 3연 + 데이터 표 |
 |---|---|
-| ![](preview/slide-12.png) | ![](preview/slide-13.png) |
+| ![](preview/slide-11.png) | ![](preview/slide-13.png) |
+
+| 자유 배치 (긴 글) | 핵심 정리 |
+|---|---|
+| ![](preview/slide-14.png) | ![](preview/slide-15.png) |
+
+| 부록 간지 | 전면 데이터 표 |
+|---|---|
+| ![](preview/slide-16.png) | ![](preview/slide-17.png) |
 
 | 종료 (E.O.D.) | |
 |---|---|
-| ![](preview/slide-14.png) | |
+| ![](preview/slide-18.png) | |
 
 ## 버전
 
