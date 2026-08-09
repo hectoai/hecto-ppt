@@ -15,7 +15,6 @@ const path = require("path");
 const C = {
   brandOrange: "FF6013",
   wash: "FFE7DC",
-  orange300: "FFBB93",
   canvas: "FFFFFF",
   contextBar: "D0CECF",
   hairline: "E8E9EC",
@@ -26,8 +25,9 @@ const C = {
   muted: "A6AAA9",
   positive: "15B886",
   negative: "FF0000",
-  pointBlue: "00A1FF",
 };
+// point-blue(#00A1FF)와 brand-orange-300(#FFBB93)은 차트와 함께 빠졌다.
+// 쓸 자리가 없는 색을 팔레트에 두면 장식용으로 꺼내 쓰게 된다.
 const F = "Pretendard";
 
 // ── 그리드 (DESIGN.md Layout) ─────────────────────────────────────────

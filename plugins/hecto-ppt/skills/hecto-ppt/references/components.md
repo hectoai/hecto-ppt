@@ -236,7 +236,7 @@ runs.push({
 
 - **Library:** **Lucide** (`lucide.dev`) as the canonical source — clean stroke geometry, MIT-licensed, exhaustive coverage. If a needed icon is absent from Lucide, fall back to **Feather Icons** (the visual ancestor of Lucide). Never mix Material Icons, Font Awesome, Heroicons, or any filled/multi-color set into the same deck.
 - **Style:** outline only — round line caps, round joins. No filled glyphs, no two-tone, no gradients, no shadows.
-- **Color:** {colors.ink-strong} (default), {colors.brand-orange} (when the icon emphasizes a brand-orange typographic emphasis on the same line), {colors.body} (de-emphasized — table eyebrow icons). Never {colors.point-blue} or any other semantic color outside delta indicators (where ▲ and ▼ are typographic, not iconographic).
+- **Color:** {colors.ink-strong} (default), {colors.brand-orange} (when the icon emphasizes a brand-orange typographic emphasis on the same line), {colors.body} (de-emphasized — table eyebrow icons). Never a semantic color outside delta indicators (where ▲ and ▼ are typographic, not iconographic).
 
 #### Size tokens
 

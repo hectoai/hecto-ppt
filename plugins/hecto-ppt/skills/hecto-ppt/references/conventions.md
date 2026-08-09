@@ -94,6 +94,10 @@ Not specified in this system. Default to **Fade only**, 200ms ease-in-out. Disab
 11. **Logo rendering must work in both PowerPoint and LibreOffice.** Always use pre-composited flat-RGB PNGs. Alpha-channel PNGs render correctly in PowerPoint but as opaque rectangles in LibreOffice's PDF pipeline — never deploy them.
 12. **Don't reach for a chart.** Charts are out of scope. When numbers need to be shown, the answer is a {component.data-table}, a {component.kpi-tile} row, or {layout.slide-hero-stat}.
 
+### Screenshots — out of scope
+
+> **Product screenshots and dashboard captures are not part of this system** (decided 2026-08-10). The brand excludes photography, and while a screenshot is evidence rather than decoration, admitting one image role opens sizing, cropping, caption, and border questions that the type-led voice has no answers for. A deck that genuinely needs a screenshot should place it outside this spec and accept that the page carries no brand guarantee.
+
 ## Known Gaps
 
 - Sub-brand wordmark lockups (Hecto Innovation, Financial, Healthcare, Data, Media) have separate horizontal/vertical variants. They are not bundled with this spec — request them from the brand team for sub-brand-specific decks.

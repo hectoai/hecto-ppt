@@ -24,7 +24,6 @@ Pretendard anchors every surface from 110pt section-divider numerals down to 10p
 ### Brand & Accent
 - **Brand Orange** ({colors.brand-orange}): `#FF6013`. Signature high-impact accent. Used on the {component.chapter-pill}, {component.chevron-orange}, active {component.step-card} borders, the section-divider ellipse, and table emphasis-column headers. Carries the brand's only attention-grabbing energy. ({component.kpi-tile}s carry **no** brand-orange surface — see component spec.)
 - **Brand Orange Wash** ({colors.brand-orange-wash}): `#FFE7DC`. The dominant secondary surface. Used for {component.step-strip} container background, {component.section-header-band}, {component.data-table} emphasis-column fill, and quiet grouped-content backgrounds. May appear multiple times per slide.
-- **Brand Orange 300** ({colors.brand-orange-300}): `#FFBB93`. Partial-bleed tint. Rare.
 
 ### Surface
 - **Canvas** ({colors.canvas}): `#FFFFFF`. Primary slide background, {component.section-block} body fill, {component.step-card} fill, {component.kpi-tile} fill.
@@ -42,7 +41,8 @@ Pretendard anchors every surface from 110pt section-divider numerals down to 10p
 ### Semantic
 - **Positive** ({colors.positive}): `#15B886`. Upward delta indicators (▲), positive KPI changes.
 - **Negative** ({colors.negative}): `#FF0000`. Negative deltas, error markers.
-- **Point Blue** ({colors.point-blue}): `#00A1FF`. Reserved for a single comparative dimension when one is genuinely needed. With charts out of scope it has **no current use site** — do not reach for it to decorate.
+
+> **Removed with the charts (2026-08-10):** `{colors.point-blue}` (#00A1FF) was the second chart series and `{colors.brand-orange-300}` (#FFBB93) the third. Once charts left the system neither had a use site, and a palette entry with no use site is an invitation to decorate. The working palette is **12 colors**; anything outside it fails verification rule R3. The removed values are recorded in `archive/design-charts.md` if charts ever return.
 
 ## Typography
 

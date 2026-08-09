@@ -15,11 +15,12 @@ CANVAS_W, CANVAS_H = 13.333, 7.5
 FONT = "Pretendard"
 
 # DESIGN.md > Colors
+# 12색. point-blue(#00A1FF)와 brand-orange-300(#FFBB93)은 차트와 함께 빠졌다.
 PALETTE = {
-    "FF6013", "FFE7DC", "FFBB93",          # brand
+    "FF6013", "FFE7DC",                      # brand
     "FFFFFF", "D0CECF", "E8E9EC", "EFF0F2",  # surface
     "000000", "595959", "838383", "A6AAA9",  # text
-    "15B886", "FF0000", "00A1FF",          # semantic
+    "15B886", "FF0000",                      # semantic
 }
 
 # 셰브론 헤더 앵커 (DESIGN.md:785). z-order 순서 그대로.
