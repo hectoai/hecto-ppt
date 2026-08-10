@@ -191,6 +191,14 @@ runs.push({
 - Color {colors.positive} for upward, {colors.negative} for downward, {colors.brand-orange} for neutral comparison labels.
 - Typography {typography.kpi-delta}.
 
+- **Color tracks direction, not merit.** `▲` is always {colors.positive} and `▼` is always {colors.negative}, regardless of whether the movement is good news. The direction of a number is a property of the data; whether it is good is a property of the context, and the component cannot know the context.
+
+- **When a decrease is the improvement** (defects 7 → 0, spec size 107KB → 78KB, p95 latency 420ms → 180ms), do **not** use the directional form — red on an improvement reads as a warning. Use one of these instead:
+  - **Neutral comparison.** Drop the arrow and state the baseline: `vs. 107KB` or `기준 대비 −27%`, colored {colors.brand-orange}. This is the default.
+  - **Reframe the metric so up is good.** `결함 7건` → `무결함 슬라이드 18/18`, then `▲` in {colors.positive} is honest.
+
+  Never pair `▼` with {colors.positive}. A green down-arrow forces the reader to check the axis before they can trust any indicator on the page, which costs more than the one tile gains.
+
 ### Charts — out of scope
 
 > **Charts are not part of this system.** The chart component set (vertical bar, horizontal bar, line, donut, stacked bar) and the {layout.slide-chart-focus} layout were removed on 2026-08-07; the removed text is preserved in `archive/design-charts.md`.

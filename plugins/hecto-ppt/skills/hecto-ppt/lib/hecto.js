@@ -214,6 +214,16 @@ class ContentSlide {
         { text: "  " + t.unit, options: { fontFace: F, fontSize: 16, bold: true, color: C.body } },
       ], { x: x + 0.22, y: y + 0.44, w: W - 0.44, h: 0.62, align: "left", valign: "middle", margin: 0 });
       if (t.delta) {
+        // 색은 방향을 따른다. 감소가 개선인 지표는 화살표를 빼고 neutral로 쓴다.
+        if (t.delta.startsWith("▼") && t.tone === "up") {
+          throw new Error(`▼에 상승 색을 붙일 수 없다: "${t.delta}". `
+            + "감소가 개선이면 화살표를 빼고 tone을 neutral로 두거나(`기준 대비 −27%`), "
+            + "상승이 개선이 되도록 지표를 다시 잡을 것.");
+        }
+        if (t.delta.startsWith("▲") && t.tone === "down") {
+          throw new Error(`▲에 하락 색을 붙일 수 없다: "${t.delta}". `
+            + "증가가 악화면 화살표를 빼고 tone을 neutral로 둘 것.");
+        }
         this.s.addText(t.delta, {
           x: x + 0.22, y: y + 1.12, w: W - 0.44, h: 0.26,
           fontFace: F, fontSize: 11, bold: true,

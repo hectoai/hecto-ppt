@@ -277,7 +277,7 @@ def check_anchors(idx, slide, rep):
             continue
         fill = solid_fill(sh)
 
-        for name, ok in match_component(fill, w, h, sh):
+        for name, ok in match_component(fill, w, h, sh) + match_text_component(sh):
             if not any(near(y, a) for a in ok['y']):
                 rep.fail("R12 본문 앵커",
                          f"slide {idx}: {name} y={y:.3f} (허용 {ok['y']})")
@@ -299,7 +299,50 @@ def match_component(fill, w, h, sh):
         out.append(("KPI 타일", {'y': [2.60], 'x': [0.40, 4.66, 8.92]}))
     elif fill == BRAND_ORANGE and near(w, 6.50) and near(h, 6.50):
         out.append(("섹션 디바이더 원", {'y': [0.40], 'x': [3.42]}))
+    # 높이 0의 구분선. 채움색이 없어 위 분기에 안 걸린다. 폭이 역할을 가른다.
+    # 2x2 그리드는 큰 글자가 없어 이 선이 유일한 단서다.
+    elif near(h, 0) and near(w, 12.58):
+        out.append(("헤더 룰", {'y': [1.74], 'x': [0.40]}))
+    elif near(h, 0) and near(w, 5.89):
+        out.append(("2x2 그리드 구분선", {'y': [3.29, 5.44], 'x': [0.40, 6.79]}))
+    elif near(h, 0) and near(w, 3.76):
+        out.append(("3단 컬럼 구분선", {'y': [3.90], 'x': [0.40, 4.66, 8.92]}))
+    elif near(h, 0) and near(w, 2.64):
+        out.append(("목차 구분선", {'y': [5.25], 'x': [0.40, 3.61, 6.82, 10.03]}))
     return out
+
+
+# 큰 글자는 이 시스템에서 앉는 자리가 정해져 있다. 실측값이다.
+# 여러 자리를 쓰는 크기(72, 60)는 판정이 느슨해지지만 그래도 아무 데나는 못 간다.
+TEXT_ANCHORS = {
+    88: ("히어로 스탯 numeral", {'y': [2.70], 'x': [0.40]}),
+    72: ("섹션 디바이더 번호 · E.O.D.", {'y': [1.80, 3.00], 'x': [0.40, 3.42]}),
+    60: ("섹션 디바이더 영문 제목 · 목차 표제", {'y': [0.50, 2.85], 'x': [0.55, 3.42]}),
+    44: ("KPI numeral", {'y': [3.04], 'x': [0.62, 4.88, 9.14]}),
+    40: ("핵심 정리 번호", {'y': [1.93, 2.93, 3.93, 4.93], 'x': [0.40]}),
+    36: ("커버 제목", {'y': [0.40], 'x': [6.67]}),
+    32: ("3단 컬럼 눈썹", {'y': [2.85], 'x': [0.40, 4.66, 8.92]}),
+    24: ("목차 항목", {'y': [4.20], 'x': [0.40, 3.61, 6.82, 10.03]}),
+}
+
+
+def match_text_component(sh):
+    """텍스트 상자를 폰트 크기로 알아본다.
+
+    도형 지문(크기 + 채움색)으로는 텍스트 상자를 못 본다. 채움색이 없고 크기가
+    내용을 따라간다. 히어로 스탯, 핵심 정리, 3단 컬럼, 목차가 전부 그래서
+    R12 초기 판의 사각지대였다.
+
+    상자 안에서 가장 큰 글자를 지문으로 쓴다. numeral과 단위가 한 상자에 섞여
+    있어서(`95` + `%`) 단일 크기 조건으로는 걸리지 않는다.
+    """
+    if not getattr(sh, 'has_text_frame', False) or not text_of(sh):
+        return []
+    sizes = [r.font.size.pt for r in runs(sh) if r.font.size]
+    if not sizes:
+        return []
+    hit = TEXT_ANCHORS.get(round(max(sizes)))
+    return [hit] if hit else []
 
 
 def check_bounds(idx, slide, rep):
